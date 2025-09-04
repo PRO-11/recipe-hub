@@ -722,37 +722,7 @@ function init() {
 }
 init();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","core-js/modules/web.immediate.js":"bzsBv","regenerator-runtime/runtime":"f6ot0","./model.js":"3QBkH","./views/recipeView.js":"3wx5k","url:../img/icons.svg":"fd0vu","./views/searchView.js":"kbE4Z","./views/resultsView.js":"kBQ4r","./views/paginationView.js":"7NIiB"}],"jnFvT":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"bzsBv":[function(require,module,exports,__globalThis) {
+},{"core-js/modules/web.immediate.js":"bzsBv","./model.js":"3QBkH","url:../img/icons.svg":"fd0vu","regenerator-runtime/runtime":"f6ot0","./views/recipeView.js":"3wx5k","./views/searchView.js":"kbE4Z","./views/resultsView.js":"kBQ4r","./views/paginationView.js":"7NIiB","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"bzsBv":[function(require,module,exports,__globalThis) {
 'use strict';
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("52e9b3eefbbce1ed");
@@ -2005,7 +1975,122 @@ module.exports = function(scheduler, hasTimeArg) {
     } : scheduler;
 };
 
-},{"aa6765693e58a0fe":"6xMjU","a68ecfcbf29c46f6":"9A5Vw","7087588d33667af2":"2KfBB","864edee099e8affb":"k2Sud","3a3a5a2cfab86f21":"qxRHs","cff2c830bdea4f24":"kGYHC","58a74f00cee1ac64":"elQJL"}],"f6ot0":[function(require,module,exports,__globalThis) {
+},{"aa6765693e58a0fe":"6xMjU","a68ecfcbf29c46f6":"9A5Vw","7087588d33667af2":"2KfBB","864edee099e8affb":"k2Sud","3a3a5a2cfab86f21":"qxRHs","cff2c830bdea4f24":"kGYHC","58a74f00cee1ac64":"elQJL"}],"3QBkH":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
+parcelHelpers.export(exports, "searchRecipe", ()=>searchRecipe);
+parcelHelpers.export(exports, "getSearchResultPage", ()=>getSearchResultPage);
+var _config = require("./config");
+var _helper = require("./helper");
+const state = {
+    recipe: {},
+    search: {
+        query: '',
+        result: [],
+        page: 1,
+        resultPerPage: (0, _config.RES_PAGE)
+    }
+};
+const loadRecipe = async function(id) {
+    try {
+        const res = await (0, _helper.getJSON)(`${(0, _config.API_URL)}/${id}`);
+        state.recipe = res.data.recipe;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+const searchRecipe = async function(keyword) {
+    try {
+        state.search.query = keyword;
+        const res = await (0, _helper.getJSON)(`${(0, _config.API_URL)}?search=${keyword}`);
+        state.search.result = res.data.recipes;
+        console.log(state);
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+const getSearchResultPage = function(page = state.search.page) {
+    state.search.page = page;
+    const start = (page - 1) * state.search.resultPerPage;
+    const end = page * state.search.resultPerPage;
+    return state.search.result.slice(start, end);
+};
+
+},{"./config":"2hPh4","./helper":"b1fwP","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"2hPh4":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+parcelHelpers.export(exports, "timeout_sec", ()=>timeout_sec);
+parcelHelpers.export(exports, "RES_PAGE", ()=>RES_PAGE);
+const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
+const timeout_sec = 10;
+const RES_PAGE = 10;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"b1fwP":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getJSON", ()=>getJSON);
+var _config = require("./config");
+const timeout = function(sec) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(()=>{
+            reject(new Error(`Api took more then ${sec} second to respond`));
+        }, sec * 1000);
+    });
+};
+const getJSON = async function(url) {
+    try {
+        const data = await Promise.race([
+            fetch(url),
+            timeout((0, _config.timeout_sec))
+        ]);
+        const res = await data.json();
+        if (!data.ok) throw new Error(res.message);
+        return res;
+    } catch (err) {
+        console.log("pro");
+        throw err;
+    }
+};
+
+},{"./config":"2hPh4","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fd0vu":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("icons.0809ef97.svg") + "?" + Date.now();
+
+},{}],"f6ot0":[function(require,module,exports,__globalThis) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -2590,89 +2675,7 @@ try {
     else Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}],"3QBkH":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
-parcelHelpers.export(exports, "searchRecipe", ()=>searchRecipe);
-parcelHelpers.export(exports, "getSearchResultPage", ()=>getSearchResultPage);
-var _config = require("./config");
-var _helper = require("./helper");
-const state = {
-    recipe: {},
-    search: {
-        query: '',
-        result: [],
-        page: 1,
-        resultPerPage: (0, _config.RES_PAGE)
-    }
-};
-const loadRecipe = async function(id) {
-    try {
-        const res = await (0, _helper.getJSON)(`${(0, _config.API_URL)}/${id}`);
-        state.recipe = res.data.recipe;
-    } catch (err) {
-        console.error(err);
-        throw err;
-    }
-};
-const searchRecipe = async function(keyword) {
-    try {
-        state.search.query = keyword;
-        const res = await (0, _helper.getJSON)(`${(0, _config.API_URL)}?search=${keyword}`);
-        state.search.result = res.data.recipes;
-        console.log(state);
-    } catch (err) {
-        console.error(err);
-        throw err;
-    }
-};
-const getSearchResultPage = function(page = state.search.page) {
-    state.search.page = page;
-    const start = (page - 1) * state.search.resultPerPage;
-    const end = page * state.search.resultPerPage;
-    return state.search.result.slice(start, end);
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./config":"2hPh4","./helper":"b1fwP"}],"2hPh4":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "API_URL", ()=>API_URL);
-parcelHelpers.export(exports, "timeout_sec", ()=>timeout_sec);
-parcelHelpers.export(exports, "RES_PAGE", ()=>RES_PAGE);
-const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
-const timeout_sec = 10;
-const RES_PAGE = 10;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"b1fwP":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getJSON", ()=>getJSON);
-var _config = require("./config");
-const timeout = function(sec) {
-    return new Promise(function(resolve, reject) {
-        setTimeout(()=>{
-            reject(new Error(`Api took more then ${sec} second to respond`));
-        }, sec * 1000);
-    });
-};
-const getJSON = async function(url) {
-    try {
-        const data = await Promise.race([
-            fetch(url),
-            timeout((0, _config.timeout_sec))
-        ]);
-        const res = await data.json();
-        if (!data.ok) throw new Error(res.message);
-        return res;
-    } catch (err) {
-        console.log("pro");
-        throw err;
-    }
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./config":"2hPh4"}],"3wx5k":[function(require,module,exports,__globalThis) {
+},{}],"3wx5k":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
@@ -2782,10 +2785,7 @@ class ReciepeView extends (0, _viewDefault.default) {
 }
 exports.default = new ReciepeView();
 
-},{"url:../../img/icons.svg":"fd0vu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","fraction.js":"md6n5","./View":"jSw21"}],"fd0vu":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("icons.0809ef97.svg") + "?" + Date.now();
-
-},{}],"md6n5":[function(require,module,exports,__globalThis) {
+},{"url:../../img/icons.svg":"fd0vu","fraction.js":"md6n5","./View":"jSw21","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"md6n5":[function(require,module,exports,__globalThis) {
 /*
 Fraction.js v5.3.4 8/22/2025
 https://raw.org/article/rational-numbers-in-javascript/
@@ -3211,7 +3211,7 @@ class View {
 }
 exports.default = View;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","url:../../img/icons.svg":"fd0vu"}],"kbE4Z":[function(require,module,exports,__globalThis) {
+},{"url:../../img/icons.svg":"fd0vu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"kbE4Z":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _view = require("./View");
@@ -3235,7 +3235,7 @@ class SearchView extends (0, _viewDefault.default) {
 }
 exports.default = new SearchView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./View":"jSw21"}],"kBQ4r":[function(require,module,exports,__globalThis) {
+},{"./View":"jSw21","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"kBQ4r":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _view = require("./View");
@@ -3263,7 +3263,7 @@ class ResultView extends (0, _viewDefault.default) {
 }
 exports.default = new ResultView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./View":"jSw21","url:../../img/icons.svg":"fd0vu"}],"7NIiB":[function(require,module,exports,__globalThis) {
+},{"./View":"jSw21","url:../../img/icons.svg":"fd0vu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"7NIiB":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _view = require("./View");
@@ -3310,6 +3310,6 @@ class paginationView extends (0, _viewDefault.default) {
 }
 exports.default = new paginationView();
 
-},{"./View":"jSw21","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","url:../../img/icons.svg":"fd0vu"}]},["5DuvQ","7dWZ8"], "7dWZ8", "parcelRequire3a11", {}, "./", "/")
+},{"./View":"jSw21","url:../../img/icons.svg":"fd0vu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5DuvQ","7dWZ8"], "7dWZ8", "parcelRequire3a11", {}, "./", "/")
 
 //# sourceMappingURL=Forkify.4a59a05f.js.map
