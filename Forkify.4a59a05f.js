@@ -2024,10 +2024,12 @@ const getSearchResultPage = function(page = state.search.page) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+parcelHelpers.export(exports, "API_KEY", ()=>API_KEY);
 parcelHelpers.export(exports, "timeout_sec", ()=>timeout_sec);
 parcelHelpers.export(exports, "RES_PAGE", ()=>RES_PAGE);
 const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
-const timeout_sec = 10;
+const API_KEY = '';
+const timeout_sec = 5;
 const RES_PAGE = 10;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
