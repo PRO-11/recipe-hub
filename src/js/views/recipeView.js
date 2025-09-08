@@ -32,12 +32,12 @@ class ReciepeView extends View{
                 <span class="recipe__info-text">servings</span>
     
                 <div class="recipe__info-buttons">
-                  <button class="btn--tiny btn--increase-servings">
+                  <button class="btn--tiny btn--increase-servings" data-ser="${this._data.servings-1}">
                     <svg>
                       <use href="${icons}#icon-minus-circle"></use>
                     </svg>
                   </button>
-                  <button class="btn--tiny btn--increase-servings">
+                  <button class="btn--tiny btn--increase-servings" data-ser="${this._data.servings+1}">
                     <svg>
                       <use href="${icons}#icon-plus-circle"></use>
                     </svg>
@@ -45,14 +45,14 @@ class ReciepeView extends View{
                 </div>
               </div>
     
-              <div class="recipe__user-generated">
+              <div class="recipe__user-generated ${this._data.key?'':'hidden'}">
                 <svg>
                   <use href="${icons}#icon-user"></use>
                 </svg>
               </div>
-              <button class="btn--round">
+              <button class="btn--round btn--bookmark">
                 <svg class="">
-                  <use href="${icons}#icon-bookmark-fill"></use>
+                  <use href="${icons}#icon-bookmark${this._data.bookmark?'-fill':''}"></use>
                 </svg>
               </button>
             </div>
@@ -100,6 +100,27 @@ class ReciepeView extends View{
         const load_arr=["hashchange","load"]
         load_arr.forEach((ele) => window.addEventListener(ele,callback));
         
+    }
+    addHandlerServing(callback)
+    {
+      this._parentEle.addEventListener('click',(e)=>{
+        const ele=e.target.closest('.btn--increase-servings')
+        if(!ele)
+          return ;
+        let num=+ele.getAttribute('data-ser');
+        if(num<=0)
+          return 
+        callback(num)
+      })
+    }
+    addHandleBookmark(callback)
+    {
+      this._parentEle.addEventListener('click',(e)=>{
+        const btn=e.target.closest('.btn--bookmark')
+        if(!btn)
+          return ;
+        callback();
+      })
     }
 }
 

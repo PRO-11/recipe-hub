@@ -22,3 +22,25 @@ export const getJSON=async function(url)
         throw err
     }
 }
+export const sendJSON=async function(url,reqdata)
+{
+    try{
+    const fetchReq=fetch(url,{
+      method:"POST",
+      headers:{
+        'Content-Type':"application/json"
+      },
+      body:JSON.stringify(reqdata)
+    })
+    const data=await Promise.race([fetchReq,timeout(timeout_sec)])
+    const res=await data.json();
+    if(!data.ok)
+    throw new Error(res.message)
+    return res;
+    }
+    catch(err)
+    {
+        console.log("pro")
+        throw err
+    }
+}
